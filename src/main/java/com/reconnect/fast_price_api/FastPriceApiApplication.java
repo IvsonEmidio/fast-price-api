@@ -9,5 +9,4 @@ public class FastPriceApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FastPriceApiApplication.class, args);
 	}
-
 }
