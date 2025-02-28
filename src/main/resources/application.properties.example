@@ -1,0 +1,4 @@
+spring.application.name=fast-price-api
+aliexpress.api.url=https://aliexpress-datahub.p.rapidapi.com/item_detail_6?itemId=
+aliexpress.api.host=aliexpress-datahub.p.rapidapi.com
+aliexpress.api.key=e42cfc4a29msh40faa8a5131068cp195791jsn366e1c5f16ae

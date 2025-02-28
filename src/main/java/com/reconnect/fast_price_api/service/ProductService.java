@@ -9,6 +9,7 @@ import com.reconnect.fast_price_api.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,9 +31,14 @@ public class ProductService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String API_URL = "https://aliexpress-datahub.p.rapidapi.com/item_detail_6?itemId=";
-    private static final String API_HOST = "aliexpress-datahub.p.rapidapi.com";
-    private static final String API_KEY = "6dac46ee85msh0c74940a57363a5p1d96bejsn5bf5c83fda1a";
+    @Value("${aliexpress.api.url}")
+    private String apiUrl;
+
+    @Value("${aliexpress.api.host}")
+    private String apiHost;
+
+    @Value("${aliexpress.api.key}")
+    private String apiKey;
 
     public List<Product> getAllProducts() {
         logger.debug("Fetching all products");
@@ -73,14 +79,14 @@ public class ProductService {
 
         try {
             HttpHeaders headers = new HttpHeaders();
-            headers.set("x-rapidapi-host", API_HOST);
-            headers.set("x-rapidapi-key", API_KEY);
+            headers.set("x-rapidapi-host", apiHost);
+            headers.set("x-rapidapi-key", apiKey);
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
             logger.debug("Making API call to AliExpress for itemId: {}", itemId);
             
             AliexpressResponse response = restTemplate.exchange(
-                API_URL + itemId,
+                apiUrl + itemId,
                 HttpMethod.GET,
                 entity,
                 AliexpressResponse.class
